@@ -4,7 +4,8 @@ const student = require('./student')
 module.exports = {
   getHealth,
   setStudentDetails,
-  getStudentDetails
+  getStudentDetails,
+  deleteStudentDetails
 }
 
 async function getHealth (req, res) {
@@ -27,6 +28,18 @@ async function getStudentDetails (req, res, next) {
   const studentData = { studentId, propertyPath }
 
   let studentResponse = await student.getDetails(studentData)
+  if (!studentResponse.isPresent) {
+    next()
+  } else {
+    res.json({ success: studentResponse.status })
+  }
+}
+
+async function deleteStudentDetails (req, res, next) {
+  const studentId = util.getStudentIdFromRequest(req)
+  const propertyPath = util.getPropertyPathFromRequest(req)
+  const studentData = { studentId, propertyPath }
+  const studentResponse = await student.deleteDetails(studentData)
   if (!studentResponse.isPresent) {
     next()
   } else {

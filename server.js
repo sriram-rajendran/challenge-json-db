@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 app.get('/health', api.getHealth)
 app.put('/:studentId/:propertyName*', api.setStudentDetails)
 app.get('/:studentId/:propertyName*', api.getStudentDetails)
+app.delete('/:studentId/:propertyName*', api.deleteStudentDetails)
 
 app.use(middleware.handleError)
 app.use(middleware.notFound)
