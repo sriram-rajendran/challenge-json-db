@@ -2,7 +2,8 @@ const _ = require('lodash')
 const util = require('./util')
 
 module.exports = {
-  setDetails
+  setDetails,
+  getDetails
 }
 
 async function setDetails (studentData) {
@@ -19,4 +20,17 @@ async function setDetails (studentData) {
     propertyValue)
 
   return util.setJsonDataToFile(filePath, updatedStudentJson)
+}
+
+async function getDetails (studentData) {
+  const {
+    studentId,
+    propertyPath
+  } = studentData
+  const filePath = util.getFilePath(studentId)
+  let studentJson = await util.getJsonDataFromFile(filePath)
+
+  return util.getJsonProperty(
+    studentJson,
+    propertyPath)
 }

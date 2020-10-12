@@ -11,7 +11,8 @@ module.exports = {
   getFilePath,
   getJsonDataFromFile,
   setJsonDataToFile,
-  setJsonProperty
+  setJsonProperty,
+  getJsonProperty
 }
 
 const readFile = promisify(fs.readFile)
@@ -64,4 +65,11 @@ async function setJsonDataToFile (filePath, studentJson) {
     console.error(error)
     return false
   }
+}
+
+function getJsonProperty (student, propertyPath) {
+  if (_.isEmpty(student) || !_.has(student, propertyPath)) {
+    return { isPresent: false }
+  }
+  return { isPresent: true, data: _.get(student, propertyPath) }
 }

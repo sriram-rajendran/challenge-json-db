@@ -3,7 +3,8 @@ const student = require('./student')
 
 module.exports = {
   getHealth,
-  setStudentDetails
+  setStudentDetails,
+  getStudentDetails
 }
 
 async function getHealth (req, res) {
@@ -18,4 +19,17 @@ async function setStudentDetails (req, res) {
 
   const status = await student.setDetails(studentData)
   res.json({ success: status })
+}
+
+async function getStudentDetails (req, res, next) {
+  const studentId = util.getStudentIdFromRequest(req)
+  const propertyPath = util.getPropertyPathFromRequest(req)
+  const studentData = { studentId, propertyPath }
+
+  let studentResponse = await student.getDetails(studentData)
+  if (!studentResponse.isPresent) {
+    next()
+  } else {
+    res.json({ success: studentResponse.status })
+  }
 }
