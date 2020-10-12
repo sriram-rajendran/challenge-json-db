@@ -31,7 +31,7 @@ async function getStudentDetails (req, res, next) {
   if (!studentResponse.isPresent) {
     next()
   } else {
-    res.json({ success: studentResponse.status })
+    res.json({ success: true, data: studentResponse.data })
   }
 }
 
