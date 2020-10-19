@@ -6,8 +6,8 @@ const promisify = require('util.promisify')
 
 const port = (process.env.PORT = process.env.PORT || require('get-port-sync')())
 
-const { DATA_DIRECTORY } = require('./constant')
-const server = require('./server')
+const { DATA_DIRECTORY } = require('../config/constant')
+const server = require('../server')
 
 const endpoint = `http://localhost:${port}`
 const deleteFile = promisify(fs.unlinkSync)
@@ -29,15 +29,6 @@ const sampleStudentData = {
     }
   }
 }
-
-tape('health', async function (t) {
-  const url = `${endpoint}/health`
-  jsonist.get(url, (err, body) => {
-    if (err) t.error(err)
-    t.ok(body.success, 'should have successful health check')
-    t.end()
-  })
-})
 
 tape('PUT /:studentId/:propertyName sets student property to JSON file',
   async function (t) {
@@ -214,7 +205,7 @@ tape('cleanup', async function (t) {
 })
 
 function getFilePath (studentId) {
-  return path.join(__dirname, `${DATA_DIRECTORY}/${studentId}.json`)
+  return path.join(__dirname, `../${DATA_DIRECTORY}/${studentId}.json`)
 }
 
 function parseJsonSafely (string) {

@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const promisify = require('util.promisify')
 const _ = require('lodash')
-const { DATA_DIRECTORY } = require('./constant')
+const { DATA_DIRECTORY } = require('../config/constant')
 
 module.exports = {
   getStudentIdFromRequest,
@@ -42,7 +42,7 @@ function getPropertyValueFromBody (req) {
 }
 
 function getFilePath (studentId) {
-  return path.join(__dirname, `${DATA_DIRECTORY}/${studentId}.json`)
+  return path.join(__dirname, `../${DATA_DIRECTORY}/${studentId}.json`)
 }
 
 function setJsonProperty (student, propertyPath, value) {

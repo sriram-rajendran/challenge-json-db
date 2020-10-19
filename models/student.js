@@ -1,4 +1,4 @@
-const util = require('./util')
+const util = require('../helpers/util')
 
 module.exports = {
   setDetails,
@@ -12,6 +12,7 @@ async function setDetails (studentData) {
     propertyPath,
     propertyValue
   } = studentData
+
   const filePath = util.getFilePath(studentId)
   let studentJson = await util.getJsonDataFromFile(filePath)
   let updatedStudentJson = util.setJsonProperty(
@@ -27,6 +28,7 @@ async function getDetails (studentData) {
     studentId,
     propertyPath
   } = studentData
+
   const filePath = util.getFilePath(studentId)
   let studentJson = await util.getJsonDataFromFile(filePath)
 
@@ -40,11 +42,13 @@ async function deleteDetails (studentData) {
     studentId,
     propertyPath
   } = studentData
+
   const filePath = util.getFilePath(studentId)
   let studentJson = await util.getJsonDataFromFile(filePath)
   let updatedStudentResponse = util.deleteJsonProperty(
     studentJson,
     propertyPath)
+
   if (!updatedStudentResponse.isPresent) {
     return { isPresent: false }
   }
